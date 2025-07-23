@@ -29,3 +29,17 @@ h1 {
   margin: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-bordered, .table-bordered th, .table-bordered td {
+  border: 1px solid black;
+}
+
+.table th, .table td {
+  padding: 8px;
+}
+

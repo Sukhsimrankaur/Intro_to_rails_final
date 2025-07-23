@@ -10,5 +10,6 @@ class MosquitoTrapsController < ApplicationController
 
   def show
     @mosquito_trap = MosquitoTrap.find(params[:id])
+    @readings = @mosquito_trap.mosquito_readings
   end
 end

@@ -1,6 +1,6 @@
 <h2>Mosquito Readings for <%= @mosquito_trap.name %></h2>
 
-<% if @readings.any? %>
+<% if @readings.present? %>
   <table class="table table-bordered">
     <thead>
       <tr>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_23_200321) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_23_220328) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -33,6 +33,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_23_200321) do
     t.integer "count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "species"
     t.index ["mosquito_trap_id"], name: "index_mosquito_readings_on_mosquito_trap_id"
   end
 

@@ -53,6 +53,8 @@ group :development, :test do
   gem "faker"
 
   gem "csv"
+
+  gem "kaminari"
 end
 
 group :development do

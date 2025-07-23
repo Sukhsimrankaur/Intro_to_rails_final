@@ -1,0 +1,9 @@
+<h2><%= @mosquito_trap.name %></h2>
+<p>Coordinates: <%= @mosquito_trap.latitude %>, <%= @mosquito_trap.longitude %></p>
+
+<h3>Readings</h3>
+<ul>
+  <% @mosquito_trap.mosquito_readings.each do |r| %>
+    <li><%= r.date %>: <%= r.count %> mosquitoes</li>
+  <% end %>
+</ul>

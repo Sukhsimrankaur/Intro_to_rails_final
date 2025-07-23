@@ -1,0 +1,12 @@
+<h1>Mosquito Traps</h1>
+
+<%= form_tag mosquito_traps_path, method: :get do %>
+  <%= text_field_tag :query, params[:query] %>
+  <%= submit_tag "Search" %>
+<% end %>
+
+<ul>
+  <% @mosquito_traps.each do |trap| %>
+    <li><%= link_to trap.name, mosquito_trap_path(trap) %></li>
+  <% end %>
+</ul>

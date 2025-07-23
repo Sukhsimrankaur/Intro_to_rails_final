@@ -1,12 +1,27 @@
 <h1>Mosquito Traps</h1>
 
-<%= form_tag mosquito_traps_path, method: :get do %>
-  <%= text_field_tag :query, params[:query] %>
+<nav style="margin-bottom: 1em;">
+  <%= link_to "About", about_path, style: "margin-right: 1em;" %>
+</nav>
+
+<%= form_tag mosquito_traps_path, method: :get, style: "margin-bottom: 1em;" do %>
+  <%= text_field_tag :query, params[:query], placeholder: "Search traps by name" %>
   <%= submit_tag "Search" %>
 <% end %>
 
-<ul>
-  <% @mosquito_traps.each do |trap| %>
-    <li><%= link_to trap.name, mosquito_trap_path(trap) %></li>
-  <% end %>
-</ul>
+<table class="table table-bordered" style="width: 100%; border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Location (Lat, Long)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @mosquito_traps.each do |trap| %>
+      <tr>
+        <td><%= link_to trap.name, mosquito_trap_path(trap) %></td>
+        <td><%= "#{trap.latitude}, #{trap.longitude}" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

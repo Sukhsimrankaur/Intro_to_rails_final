@@ -5,7 +5,6 @@
     <thead>
       <tr>
         <th>Date</th>
-        <th>Species</th>
         <th>Count</th>
       </tr>
     </thead>
@@ -13,7 +12,6 @@
       <% @readings.each do |reading| %>
         <tr>
           <td><%= reading.date %></td>
-          <td><%= reading.species %></td>
           <td><%= reading.count %></td>
         </tr>
       <% end %>

@@ -1,41 +1,47 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-
 require 'csv'
+require 'faker'
 
 csv_path = Rails.root.join('db', 'data', 'mosquito_data.csv')
-
-puts " Seeding mosquito data from #{csv_path}..."
-
 csv = CSV.read(csv_path, headers: true)
 
-csv.each_with_index do |row, index|
-  date = row['Count Date']
+# Trap locations → set fake lat/lng for now
+trap_locations = {}
 
-  if date.blank?
-    puts "  Skipping row #{index + 2} (missing date)"
-    next
-  end
+trap_columns = csv.headers.reject { |h| h == "Count Date" || h == "City Wide Daily Average" || h == "Trap Days" }
 
-  row.headers.each do |trap_name|
-    next if trap_name == 'Count Date' || row[trap_name].blank?
+trap_columns.each_with_index do |trap_name, i|
+  trap_id = trap_name.parameterize.underscore.upcase  # e.g. "North West 1" -> "north_west_1" -> "NORTH_WEST_1"
 
-    trap = MosquitoTrap.find_or_create_by!(name: trap_name)
+  trap = MosquitoTrap.find_or_create_by!(
+    trap_id: trap_id,
+    name: trap_name,
+    latitude: 49.8 + (i * 0.01),  # fake latitude
+    longitude: -97.1 - (i * 0.01) # fake longitude
+  )
 
-    trap.mosquito_readings.create!(
+  trap_locations[trap_name] = trap
+end
+
+csv.each do |row|
+  date = Date.parse(row['Count Date'])
+
+  trap_columns.each do |trap_name|
+    count = row[trap_name].to_i
+    trap = trap_locations[trap_name]
+
+    trap.mosquito_readings.create(
       date: date,
-      count: row[trap_name]
+      count: count
     )
-  rescue ActiveRecord::RecordInvalid => e
-    puts " Failed to create reading for trap #{trap_name} on row #{index + 2}: #{e.message}"
   end
 end
 
-puts " Seeding complete!"
+# Generate fake inspectors
+20.times do
+  inspector = Inspector.create(
+    name: Faker::Name.name,
+    specialty: Faker::Job.field
+  )
+
+  inspector.mosquito_traps << MosquitoTrap.order('RANDOM()').limit(3)
+end

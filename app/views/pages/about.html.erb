@@ -1,2 +1,66 @@
-<h3>About the Mosquito Tracker</h3>
-<p>Data Source: Daily Adult Mosquito Trap Data - City of Winnipeg Open Data Portal</p>
+<h3>About Mosquito Tracker</h3>
+
+<p>The Mosquito Tracker system helps monitor mosquito activity across geographic locations using traps. It tracks mosquito counts by species and date and links each trap to assigned field inspectors. The system is designed to assist with health monitoring, prevention, and reporting.</p>
+
+<h4>Database Overview (ERD)</h4>
+
+<p>The Entity Relationship Diagram (ERD) defines how data is structured within the Mosquito Tracker application.</p>
+
+<h4>Entities and Relationships</h4>
+
+<ul>
+  <li><strong>Inspectors</strong>: Staff responsible for monitoring mosquito traps. Each inspector can be assigned to multiple traps.</li>
+  <li><strong>Mosquito Traps</strong>: Physical devices placed at specific locations to catch mosquitoes. Each trap may be linked to multiple inspectors and multiple mosquito readings.</li>
+  <li><strong>Mosquito Readings</strong>: Records of mosquito species and counts on specific dates. Each reading belongs to a single trap.</li>
+  <li><strong>InspectorsMosquitoTraps</strong>: A join table that supports the many-to-many relationship between inspectors and traps.</li>
+</ul>
+
+<h4>Relationship Summary</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th>Entity A</th>
+      <th>Relationship</th>
+      <th>Entity B</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Inspectors</td>
+      <td>&harr;</td>
+      <td>Mosquito Traps</td>
+      <td>Many-to-Many</td>
+    </tr>
+    <tr>
+      <td>Mosquito Traps</td>
+      <td>&rarr;</td>
+      <td>Mosquito Readings</td>
+      <td>One-to-Many</td>
+    </tr>
+    <tr>
+      <td>Mosquito Readings</td>
+      <td>&larr;</td>
+      <td>Mosquito Traps</td>
+      <td>Many-to-One</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Text-Based ERD</h3>
+
+<pre>
+┌──────────────┐             ┌────────────────────────────┐             ┌──────────────────────┐
+│ Inspectors   │────────────► InspectorsMosquitoTraps ◄───────────────►│ MosquitoTraps        │
+└──────────────┘   1     *   └────────────────────────────┘    *     1  └────────────┬─────────┘
+                                                                                     │
+                                                                                     ▼
+                                                                           ┌────────────────────┐
+                                                                           │ MosquitoReadings   │
+                                                                           └────────────────────┘
+
+</pre>
+
+<h3>Visual ERD:</h3>
+<%= image_tag "ERD.png", alt: "ERD Diagram", style: "max-width: 100%;" %>

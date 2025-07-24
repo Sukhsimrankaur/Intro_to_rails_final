@@ -11,12 +11,14 @@
     <tbody>
       <% @readings.each do |reading| %>
         <tr>
-          <td><%= reading.date %></td>
+          <td><%= reading.date.strftime('%Y-%m-%d') %></td>
           <td><%= reading.count %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
+
+  <%= paginate @readings %>
 <% else %>
   <p>No readings available for this trap.</p>
 <% end %>

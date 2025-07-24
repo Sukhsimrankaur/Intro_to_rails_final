@@ -8,8 +8,8 @@ class MosquitoTrapsController < ApplicationController
     end
   end
 
-  def show
-    @mosquito_trap = MosquitoTrap.find(params[:id])
-    @readings = @mosquito_trap.mosquito_readings
-  end
+ def show
+  @mosquito_trap = MosquitoTrap.find(params[:id])
+  @readings = @mosquito_trap.mosquito_readings.order(date: :desc).page(params[:page]).per(5) # paginate, 5 per page
+end
 end
